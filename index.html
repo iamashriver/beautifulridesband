@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#11100e">
+  <meta name="description" content="Beautiful Rides — Desert Magic. Melodic, hook-filled, 90s-influenced rock.">
+  <title>Beautiful Rides — Desert Magic</title>
+
+  <style>
+    :root {
+      --cream: #f4ead5;
+      --gold: #d99a45;
+      --gold-bright: #f0b45c;
+      --dark: #0c0c0b;
+      --line: rgba(240, 180, 92, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--cream);
+      background: var(--dark);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* -------------------------------------------------------
+       FULL-PAGE ALBUM COVER
+       ------------------------------------------------------- */
+
+    .site {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      isolation: isolate;
+
+      background-image:
+        linear-gradient(
+          to bottom,
+          rgba(5, 7, 7, 0.16) 0%,
+          rgba(5, 5, 4, 0.02) 35%,
+          rgba(5, 5, 4, 0.46) 72%,
+          rgba(5, 5, 4, 0.96) 100%
+        ),
+        url("desert-magic.png");
+
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+
+    /*
+      A slow background movement makes the album artwork feel alive.
+      It is intentionally subtle so it still feels like the original cover.
+    */
+    .site::before {
+      content: "";
+      position: fixed;
+      inset: -5%;
+      z-index: -3;
+      pointer-events: none;
+
+      background: url("desert-magic.png") center center / cover no-repeat;
+
+      animation: desert-drift 22s ease-in-out infinite alternate;
+      transform-origin: center;
+    }
+
+    /*
+      This is the "sunrise glow." It does not replace the artwork.
+      It adds a soft amber light over the horizon and slowly moves/pulses.
+    */
+    .site::after {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      pointer-events: none;
+
+      width: 85vw;
+      height: 48vh;
+      left: 50%;
+      top: 44%;
+      transform: translate(-50%, -50%);
+
+      background:
+        radial-gradient(
+          ellipse at center,
+          rgba(255, 190, 82, 0.34) 0%,
+          rgba(255, 166, 61, 0.19) 23%,
+          rgba(255, 135, 42, 0.08) 46%,
+          rgba(255, 100, 20, 0) 72%
+        );
+
+      filter: blur(22px);
+      mix-blend-mode: screen;
+      opacity: 0.72;
+
+      animation: sunrise-glow 10s ease-in-out infinite;
+    }
+
+    @keyframes sunrise-glow {
+      0%, 100% {
+        opacity: 0.52;
+        transform: translate(-50%, -47%) scale(0.92);
+      }
+
+      50% {
+        opacity: 0.92;
+        transform: translate(-50%, -53%) scale(1.08);
+      }
+    }
+
+    @keyframes desert-drift {
+      0% {
+        transform: scale(1.02) translate3d(0, 0, 0);
+        filter: brightness(0.96) saturate(0.95);
+      }
+
+      50% {
+        filter: brightness(1.04) saturate(1.02);
+      }
+
+      100% {
+        transform: scale(1.07) translate3d(0, -0.7%, 0);
+        filter: brightness(1.01) saturate(1);
+      }
+    }
+
+    /* A second, very subtle horizon shimmer. */
+    .horizon-glow {
+      position: fixed;
+      z-index: -1;
+      left: 0;
+      right: 0;
+      top: 49%;
+      height: 16vh;
+      pointer-events: none;
+
+      background: linear-gradient(
+        to bottom,
+        rgba(255, 176, 69, 0),
+        rgba(255, 176, 69, 0.10),
+        rgba(255, 176, 69, 0)
+      );
+
+      filter: blur(18px);
+      animation: horizon-pulse 7s ease-in-out infinite;
+    }
+
+    @keyframes horizon-pulse {
+      0%, 100% {
+        opacity: 0.35;
+        transform: scaleY(0.75);
+      }
+
+      50% {
+        opacity: 0.8;
+        transform: scaleY(1.15);
+      }
+    }
+
+    /* -------------------------------------------------------
+       NAV
+       ------------------------------------------------------- */
+
+    nav {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+      padding: 30px 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 34px;
+    }
+
+    nav a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      opacity: 0.9;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    nav a:hover {
+      color: var(--gold-bright);
+      opacity: 1;
+    }
+
+    /* -------------------------------------------------------
+       HERO
+       ------------------------------------------------------- */
+
+    .hero {
+      min-height: calc(100vh - 78px);
+      width: min(1100px, 90%);
+      margin: 0 auto;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+      padding: 40px 0 90px;
+    }
+
+    .band-logo {
+      width: min(650px, 82vw);
+      height: auto;
+      display: block;
+
+      filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.55));
+
+      animation: logo-in 1.2s ease-out both;
+    }
+
+    @keyframes logo-in {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .album-title {
+      margin: 24px 0 8px;
+      color: var(--gold-bright);
+      font-size: clamp(25px, 4vw, 48px);
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      text-shadow: 0 3px 18px rgba(0,0,0,.65);
+    }
+
+    .tagline {
+      margin: 0;
+      font-size: clamp(12px, 1.5vw, 17px);
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 12px rgba(0,0,0,.9);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 18px;
+      margin-top: 34px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 26px;
+      border: 1px solid var(--gold);
+      color: var(--cream);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12px;
+      background: rgba(10, 9, 8, 0.42);
+      backdrop-filter: blur(4px);
+      transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+    }
+
+    .button:hover {
+      background: rgba(217, 154, 69, 0.20);
+      border-color: var(--gold-bright);
+      transform: translateY(-2px);
+    }
+
+    .scroll-cue {
+      margin-top: 60px;
+      font-size: 25px;
+      color: var(--gold-bright);
+      animation: bob 2.5s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* -------------------------------------------------------
+       CONTENT
+       ------------------------------------------------------- */
+
+    .content {
+      width: min(1100px, 90%);
+      margin: 0 auto;
+      padding: 80px 0 55px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: rgba(7, 7, 6, 0.38);
+      backdrop-filter: blur(3px);
+    }
+
+    .card {
+      min-height: 240px;
+      padding: 34px 28px;
+      border-right: 1px solid rgba(240, 180, 92, 0.24);
+    }
+
+    .card:last-child {
+      border-right: 0;
+    }
+
+    .card h2 {
+      margin: 0 0 18px;
+      color: var(--gold-bright);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .card p {
+      margin: 0 0 18px;
+      line-height: 1.7;
+      font-size: 14px;
+      color: rgba(244, 234, 213, 0.88);
+    }
+
+    .card a {
+      color: var(--gold-bright);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 11px;
+    }
+
+    .shows {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .shows li {
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(240, 180, 92, 0.2);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .shows span {
+      display: block;
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px 55px;
+      color: rgba(244, 234, 213, 0.72);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-bottom: 25px;
+    }
+
+    .social a {
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .social a:hover {
+      color: var(--gold-bright);
+    }
+
+    /* -------------------------------------------------------
+       MOBILE
+       ------------------------------------------------------- */
+
+    @media (max-width: 800px) {
+      .site {
+        background-attachment: scroll;
+        background-position: 52% center;
+      }
+
+      .site::before {
+        position: absolute;
+        background-position: 52% center;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+
+      .hero {
+        min-height: 82vh;
+        padding-top: 20px;
+      }
+
+      .band-logo {
+        width: min(540px, 90vw);
+      }
+
+      .album-title {
+        letter-spacing: 0.18em;
+      }
+
+      .tagline {
+        line-height: 1.6;
+        max-width: 90%;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .card {
+        border-right: 1px solid rgba(240, 180, 92, 0.24);
+        border-bottom: 1px solid rgba(240, 180, 92, 0.24);
+      }
+
+      .card:nth-child(2n) {
+        border-right: 0;
+      }
+
+      .card:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+    }
+
+    @media (max-width: 520px) {
+      nav {
+        padding-top: 20px;
+      }
+
+      .hero {
+        min-height: 78vh;
+      }
+
+      .buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card,
+      .card:nth-child(2n) {
+        border-right: 0;
+        border-bottom: 1px solid rgba(240, 180, 92, 0.24);
+      }
+
+      .card:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    /* Respect users who prefer reduced motion. */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site">
+
+    <div class="horizon-glow"></div>
+
+    <nav>
+      <a href="#music">Music</a>
+      <a href="#shows">Shows</a>
+      <a href="#about">About</a>
+      <a href="#video">Video</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+      <section class="hero" id="music">
+        <img
+          class="band-logo"
+          src="beautiful-rides-logo.png"
+          alt="Beautiful Rides"
+        >
+
+        <h1 class="album-title">Desert Magic</h1>
+
+        <p class="tagline">
+          Melodic. Hook-filled. 90s-influenced rock.
+        </p>
+
+        <div class="buttons">
+          <!-- Replace these # links with your actual streaming URLs -->
+          <a class="button" href="#" target="_blank" rel="noopener">
+            Listen on Spotify
+          </a>
+
+          <a class="button" href="#" target="_blank" rel="noopener">
+            Apple Music
+          </a>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true">⌄</div>
+      </section>
+
+      <section class="content">
+        <div class="cards">
+
+          <article class="card">
+            <h2>Latest Release</h2>
+            <p><em>Desert Magic</em></p>
+            <a href="#music">Listen now →</a>
+          </article>
+
+          <article class="card" id="shows">
+            <h2>Upcoming Shows</h2>
+
+            <ul class="shows">
+              <li>
+                6.14 — Shanghai Tunnel Bar
+                <span>Portland, OR</span>
+              </li>
+              <li>
+                7.26 — Foundry
+                <span>Portland, OR</span>
+              </li>
+            </ul>
+
+            <br>
+            <a href="#shows">View all dates →</a>
+          </article>
+
+          <article class="card" id="about">
+            <h2>About</h2>
+            <p>
+              Beautiful Rides is a melodic, hook-filled rock band
+              inspired by the golden era of 90s alternative.
+            </p>
+            <a href="#about">Read more →</a>
+          </article>
+
+          <article class="card" id="video">
+            <h2>Watch</h2>
+            <p><em>Official Videos</em></p>
+            <!-- Replace # with your YouTube link -->
+            <a href="#" target="_blank" rel="noopener">
+              Watch now →
+            </a>
+          </article>
+
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact">
+      <div class="social">
+        <!-- Replace # with your actual social links -->
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">Facebook</a>
+        <a href="#" target="_blank" rel="noopener">Spotify</a>
+        <a href="#" target="_blank" rel="noopener">YouTube</a>
+      </div>
+
+      <div>Contact: info@beautifulrides.com</div>
+      <br>
+      <div>© 2026 Beautiful Rides</div>
+    </footer>
+
+  </div>
+</body>
+</html>
