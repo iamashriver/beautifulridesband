@@ -59,7 +59,7 @@
       letter-spacing: .2em;
       text-transform: uppercase;
     }
-    .nav a {
+    /*.nav a {
       text-decoration: none;
       color: #fff4e1;
       padding: 10px 0;
@@ -67,6 +67,19 @@
       transition: color .2s ease;
     }
     .nav a:hover { color: var(--gold-light); }
+    */
+
+    nav a,
+.social-links a {
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+nav a:hover,
+.social-links a:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
 
     .hero {
       min-height: 485px;
