@@ -239,6 +239,20 @@
       letter-spacing: .17em;
       text-transform: uppercase;
     }
+
+/* Accessible hyperlink hover and focus states */
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+a:focus-visible {
+  outline: 2px solid #f5bd69;
+  outline-offset: 4px;
+  text-decoration: underline;
+}
+
     .social-links { display: flex; align-items: center; justify-content: center; gap: 30px; margin-bottom: 27px; }
     .social-links a { width: 28px; height: 28px; display: grid; place-items: center; color: var(--cream); text-decoration: none; transition: color .2s, transform .2s; }
     .social-links a:hover { color: var(--gold-light); transform: translateY(-2px); }
